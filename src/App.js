@@ -1,7 +1,7 @@
-import "./App.css";
-import { ExpenseItem } from "./component/ExpenseItem";
+import { Expenses } from "./component/Expenses/Expenses";
+import { NewExpense } from "./component/NewExpense/NewExpense";
 
-function App() {
+const App = () => {
   const expenses = [
     {
       id: "e1",
@@ -23,30 +23,19 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
+
+  const addNewExpenseHandler = (expense) => {
+    console.log(expense);
+  };
+
   return (
-    <div className="App">
-      <ExpenseItem
-        title={expenses[0].title}
-        date={expenses[0].date}
-        price={expenses[0].amount}
-      />
-      <ExpenseItem
-        title={expenses[1].title}
-        date={expenses[1].date}
-        price={expenses[1].amount}
-      />
-      <ExpenseItem
-        title={expenses[2].title}
-        date={expenses[2].date}
-        price={expenses[2].amount}
-      />
-      <ExpenseItem
-        title={expenses[3].title}
-        date={expenses[3].date}
-        price={expenses[3].amount}
-      />
+    <div>
+      <NewExpense onAddNewExpense={addNewExpenseHandler} />
+      <div>
+        <Expenses expenses={expenses} />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
