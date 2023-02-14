@@ -1,29 +1,33 @@
+import { useState } from "react";
+import { ExpenseFilter } from "./ExpenseFilter";
 import { ExpenseItem } from "./ExpenseItem";
 import "./Expenses.css";
 
 export const Expenses = (props) => {
+  const [filteredYear, setFilteredYear] = useState("2023");
+  const filterYearHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+  };
+
+  const FilteredExpenses = props.expenses.filter((exp) => {
+    return exp.date.getUTCFullYear().toString() === filteredYear;
+  });
+  // console.log(FilteredExpenses);
+
   return (
     <div className="expenses">
-      <ExpenseItem
-        title={props.expenses[0].title}
-        date={props.expenses[0].date}
-        price={props.expenses[0].amount}
+      <ExpenseFilter
+        selected={filteredYear}
+        onChangeFilter={filterYearHandler}
       />
-      <ExpenseItem
-        title={props.expenses[1].title}
-        date={props.expenses[1].date}
-        price={props.expenses[1].amount}
-      />
-      <ExpenseItem
-        title={props.expenses[2].title}
-        date={props.expenses[2].date}
-        price={props.expenses[2].amount}
-      />
-      <ExpenseItem
-        title={props.expenses[3].title}
-        date={props.expenses[3].date}
-        price={props.expenses[3].amount}
-      />
+      {FilteredExpenses.map((expense) => (
+        <ExpenseItem
+          key={expense.id}
+          title={expense.title}
+          date={expense.date}
+          price={expense.amount}
+        />
+      ))}
     </div>
   );
 };
